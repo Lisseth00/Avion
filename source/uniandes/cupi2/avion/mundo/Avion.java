@@ -329,6 +329,39 @@ public class Avion
         return sillasEconomicas;
     }
     
+    /**
+     * Cuenta el número de sillas ocupadas en la ventana para un arreglo de sillas dado.
+     * @param pSillas El arreglo de sillas a analizar.
+     * @return El número de sillas en ventana ocupadas en el arreglo dado.
+     */
+    private int contarSillasEnVentanaOcupadas(Silla[] pSillas) {
+        int contador = 0;
+        for (Silla silla : pSillas) {
+            if (silla.sillaAsignada() && silla.darUbicacion() == Ubicacion.VENTANA) {
+                contador++;
+            }
+        }
+        return contador;
+    }
+    
+    /**
+     * Devuelve la clase que tiene el mayor número de asientos ocupados en la ventana.
+     * En caso de que el número de sillas en ambas clases sea igual, el método debe devolver null.
+     * @return La **Clase** con más sillas en ventana ocupadas: `Clase.EJECUTIVA` o `Clase.ECONOMICA`,
+     * o `null` si el número de sillas en ventana ocupadas es igual.
+     */
+    public Clase darClaseConMasSillasEnVentanaOcupadas() {
+        int ocupadasEjecutiva = contarSillasEnVentanaOcupadas(sillasEjecutivas);
+        int ocupadasEconomica = contarSillasEnVentanaOcupadas(sillasEconomicas);
+
+        if (ocupadasEjecutiva > ocupadasEconomica) {
+            return Clase.EJECUTIVA;
+        } else if (ocupadasEconomica > ocupadasEjecutiva) {
+            return Clase.ECONOMICA;
+        } else {
+            return null; // Devuelve (null) porque ambas clases tienen el mismo número de sillas de ventana ocupadas.
+        }
+    }
 
     /**
      * Método para la extensión 1.
