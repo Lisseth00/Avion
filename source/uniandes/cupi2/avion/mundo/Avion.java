@@ -363,6 +363,20 @@ public class Avion
         }
     }
 
+    
+    /**
+     * Devuelve el primer asiento libre en la clase económica que se encuentra en la ventana.
+     * En caso de que no haya una silla libre, el método debe devolver null.
+     * @return La primera **Silla** económica libre en ventana, o `null` si no se encuentra ninguna.
+     */
+    public Silla darSillaEconomicaLibreEnVentana() {
+        for (Silla silla : sillasEconomicas) {
+            if (!silla.sillaAsignada() && silla.darUbicacion() == Ubicacion.VENTANA) {
+                return silla;
+            }
+        }
+        return null; // No se encontró ningún asiento de ventana libre en clase económica
+    }
     /**
      * Método para la extensión 1.
      * @return Respuesta 1.
