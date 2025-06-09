@@ -383,7 +383,15 @@ public class Avion
      */
     public String metodo1( )
     {
-        return "Respuesta 1";
+    	Clase claseConMasOcupacion = darClaseConMasSillasEnVentanaOcupadas(); // Utilice el nuevo método
+
+        if (claseConMasOcupacion == null) { // Comprueba si los recuentos son iguales
+            return "Hay un número igual de sillas ocupadas en la ventana.";
+        } else if (claseConMasOcupacion == Clase.EJECUTIVA) { // Verifica si la ejecutiva tiene más
+            return "Hay más sillas ocupadas ubicadas en la ventana en la clase ejecutiva.";
+        } else { // Económica tiene más
+            return "Hay más sillas ocupadas ubicadas en la ventana en la clase económica.";
+        }
     }
 
     /**
