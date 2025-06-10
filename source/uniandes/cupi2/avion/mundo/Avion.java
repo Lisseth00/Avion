@@ -104,7 +104,7 @@ public class Avion
      * @return Silla asignada al pasajero o null si no se pudo asignar una silla al pasajero en la ubicación y clase especificados.
      */
     public Silla asignarSilla( Clase pClase, Ubicacion pUbicacion, Pasajero pPasajero )
-    {
+    { 
         // busca una silla libre
         Silla silla = null;
         if( pClase == Clase.EJECUTIVA )
