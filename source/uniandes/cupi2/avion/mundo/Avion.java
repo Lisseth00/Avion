@@ -104,7 +104,7 @@ public class Avion
      * @return Silla asignada al pasajero o null si no se pudo asignar una silla al pasajero en la ubicación y clase especificados.
      */
     public Silla asignarSilla( Clase pClase, Ubicacion pUbicacion, Pasajero pPasajero )
-    {
+    { 
         // busca una silla libre
         Silla silla = null;
         if( pClase == Clase.EJECUTIVA )
@@ -328,14 +328,70 @@ public class Avion
     {
         return sillasEconomicas;
     }
+    
+    /**
+     * Cuenta el número de sillas ocupadas en la ventana para un arreglo de sillas dado.
+     * @param pSillas El arreglo de sillas a analizar.
+     * @return El número de sillas en ventana ocupadas en el arreglo dado.
+     */
+    private int contarSillasEnVentanaOcupadas(Silla[] pSillas) {
+        int contador = 0;
+        for (Silla silla : pSillas) {
+            if (silla.sillaAsignada() && silla.darUbicacion() == Ubicacion.VENTANA) {
+                contador++;
+            }
+        }
+        return contador;
+    }
+    
+    /**
+     * Devuelve la clase que tiene el mayor número de asientos ocupados en la ventana.
+     * En caso de que el número de sillas en ambas clases sea igual, el método debe devolver null.
+     * @return La **Clase** con más sillas en ventana ocupadas: `Clase.EJECUTIVA` o `Clase.ECONOMICA`,
+     * o `null` si el número de sillas en ventana ocupadas es igual.
+     */
+    public Clase darClaseConMasSillasEnVentanaOcupadas() {
+        int ocupadasEjecutiva = contarSillasEnVentanaOcupadas(sillasEjecutivas);
+        int ocupadasEconomica = contarSillasEnVentanaOcupadas(sillasEconomicas);
 
+        if (ocupadasEjecutiva > ocupadasEconomica) {
+            return Clase.EJECUTIVA;
+        } else if (ocupadasEconomica > ocupadasEjecutiva) {
+            return Clase.ECONOMICA;
+        } else {
+            return null; // Devuelve (null) porque ambas clases tienen el mismo número de sillas de ventana ocupadas.
+        }
+    }
+
+    
+    /**
+     * Devuelve el primer asiento libre en la clase económica que se encuentra en la ventana.
+     * En caso de que no haya una silla libre, el método debe devolver null.
+     * @return La primera **Silla** económica libre en ventana, o `null` si no se encuentra ninguna.
+     */
+    public Silla darSillaEconomicaLibreEnVentana() {
+        for (Silla silla : sillasEconomicas) {
+            if (!silla.sillaAsignada() && silla.darUbicacion() == Ubicacion.VENTANA) {
+                return silla;
+            }
+        }
+        return null; // No se encontró ningún asiento de ventana libre en clase económica
+    }
     /**
      * Método para la extensión 1.
      * @return Respuesta 1.
      */
     public String metodo1( )
     {
-        return "Respuesta 1";
+    	Clase claseConMasOcupacion = darClaseConMasSillasEnVentanaOcupadas(); // Utilice el nuevo método
+
+        if (claseConMasOcupacion == null) { // Comprueba si los recuentos son iguales
+            return "Hay un número igual de sillas ocupadas en la ventana.";
+        } else if (claseConMasOcupacion == Clase.EJECUTIVA) { // Verifica si la ejecutiva tiene más
+            return "Hay más sillas ocupadas ubicadas en la ventana en la clase ejecutiva.";
+        } else { // Económica tiene más
+            return "Hay más sillas ocupadas ubicadas en la ventana en la clase económica.";
+        }
     }
 
     /**
@@ -344,7 +400,13 @@ public class Avion
      */
     public String metodo2( )
     {
-        return "Respuesta 2";
+    	Silla sillaLibre = darSillaEconomicaLibreEnVentana(); // Utilice el nuevo método 
+
+        if (sillaLibre != null) { // Comprobar si se encontró un asiento libre
+            return "Si hay una silla económica gratuita en la ventana. El número de la silla es " + sillaLibre.darNumero() + ".";
+        } else { // No se encontró ningún asiento libre
+            return "No hay silla económica libre en la ventana.";
+        }
     }
 
 }

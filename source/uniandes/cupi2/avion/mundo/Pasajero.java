@@ -23,7 +23,7 @@ public class Pasajero
     /**
      * Cédula del pasajero.
      */
-    private String cedula;
+    private String cedula; 
 
     /**
      * Nombre del pasajero.
